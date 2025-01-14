@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de PDF</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f4f7fa;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Encabezado con verde menta */
+        h1 {
+            text-align: center;
+            color: #fff;
+            background: linear-gradient(45deg, #4db8a8, #80e0d6);
+            padding: 40px 0;
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            margin-bottom: 40px;
+        }
+
+        /* Formulario */
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input, textarea {
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus {
+            background-color: #ffffff;
+            border-color: #80bdff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            grid-column: span 2;
+            padding: 15px;
+            background-color: #4db8a8; /* Menta */
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+
+        button:hover {
+            background-color: #3a9f91;
+        }
+
+        /* Ajustes responsivos */
+        @media (max-width: 768px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+            button {
+                grid-column: span 1;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de PDF</h1>
+        <form action="/generate-pdf" method="POST">
+            <!-- Primera fila -->
+            <div class="form-group">
+                <label for="shipper_id">Shipper ID</label>
+                <input type="text" id="shipper_id" name="shipper_id" required>
+            </div>
+            <div class="form-group">
+                <label for="sales_order_no">Sales Order No</label>
+                <input type="text" id="sales_order_no" name="sales_order_no" required>
+            </div>
+
+            <!-- Segunda fila -->
+            <div class="form-group">
+                <label for="order_type">Order Type</label>
+                <input type="text" id="order_type" name="order_type" required>
+            </div>
+            <div class="form-group">
+                <label for="customer_id">Customer ID</label>
+                <input type="text" id="customer_id" name="customer_id" required>
+            </div>
+
+            <!-- Campos largos -->
+            <div class="form-group">
+                <label for="bill_to">Bill To</label>
+                <textarea id="bill_to" name="bill_to" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="ship_to">Ship To</label>
+                <textarea id="ship_to" name="ship_to" rows="3" required></textarea>
+            </div>
+
+            <!-- Notas -->
+            <div class="form-group" style="grid-column: span 2;">
+                <label for="order_notes">Order Notes</label>
+                <textarea id="order_notes" name="order_notes" rows="3"></textarea>
+            </div>
+
+            <!-- Tercera fila -->
+            <div class="form-group">
+                <label for="total_weight">Total Weight</label>
+                <input type="text" id="total_weight" name="total_weight" required>
+            </div>
+            <div class="form-group">
+                <label for="ship_via">Ship VIA</label>
+                <input type="text" id="ship_via" name="ship_via" required>
+            </div>
+
+            <!-- Cuarta fila -->
+            <div class="form-group">
+                <label for="order_date">Order Date</label>
+                <input type="date" id="order_date" name="order_date" required>
+            </div>
+
+            <!-- Quinta fila -->
+            <div class="form-group">
+                <label for="sales_person">Sales Person</label>
+                <input type="text" id="sales_person" name="sales_person" required>
+            </div>
+            <div class="form-group">
+                <label for="site">Site</label>
+                <input type="text" id="site" name="site" required>
+            </div>
+
+            <!-- Sexta fila -->
+            <div class="form-group">
+                <label for="qty_shipped">QTY Shipped</label>
+                <input type="text" id="qty_shipped" name="qty_shipped" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="3"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ship_date">Ship Date</label>
+                <input type="date" id="ship_date" name="ship_date" required>
+            </div>
+
+            <!-- Botón -->
+            <button type="submit">Generar PDF</button>
+        </form>
+    </div>
+</body>
+</html>
